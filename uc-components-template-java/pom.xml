@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.5.RELEASE</version>
+
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.example</groupId>
+    <artifactId>demo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>demo</name>
+    <description>Demo project for Spring Boot</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <kni-version>2.0.3</kni-version>
+    </properties>
+
+    <dependencies>
+        <!--spring boot 相关依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!--日志-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.10</version>
+        </dependency>
+
+        <!--swagger增强日志-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>${kni-version}</version>
+        </dependency>
+
+        <!--validator校验参数-->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.1.5.Final</version>
+        </dependency>
+
+        <!--alibaba JSON-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.70</version>
+        </dependency>
+
+        <!--Java工具类库-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.4.1</version>
+        </dependency>
+
+        <!--数据库相关-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.11</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-extension</artifactId>
+            <version>3.0.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.0.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
+        <!--内存数据库用于测试-->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.6</version>
+        </dependency>
+
+    </dependencies>
+
+
+    <profiles>
+        <!--开发环境 -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profiles.activation>dev</profiles.activation>
+                <log.path>/export/Logs/</log.path>
+                <domain-name>hello-world</domain-name>
+                <app-appenders-ref>
+                    <![CDATA[
+						<appender-ref ref="CONSOLE" />
+						<appender-ref ref="APP_INFO" />
+						<appender-ref ref="APP_ERROR" />
+					]]>
+                </app-appenders-ref>
+                <root-appenders-ref>
+                    <![CDATA[
+						<appender-ref ref="CONSOLE" />
+						<appender-ref ref="SYS_INFO" />
+						<appender-ref ref="SYS_ERROR" />
+					]]>
+                </root-appenders-ref>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!--test环境 -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <profiles.activation>test</profiles.activation>
+                <log.path>/export/Logs/</log.path>
+                <domain-name>hello-world</domain-name>
+                <app-appenders-ref>
+                    <![CDATA[
+						<appender-ref ref="APP_INFO" />
+						<appender-ref ref="APP_ERROR" />
+					]]>
+                </app-appenders-ref>
+                <root-appenders-ref>
+                    <![CDATA[
+						<appender-ref ref="SYS_INFO" />
+						<appender-ref ref="SYS_ERROR" />
+					]]>
+                </root-appenders-ref>
+            </properties>
+        </profile>
+        <!--正式环境 -->
+        <profile>
+            <id>production</id>
+            <properties>
+                <profiles.activation>production</profiles.activation>
+                <log.path>/export/Logs/</log.path>
+                <domain-name>hello-world</domain-name>
+                <app-appenders-ref>
+                    <![CDATA[
+						<appender-ref ref="APP_INFO" />
+						<appender-ref ref="APP_ERROR" />
+					]]>
+                </app-appenders-ref>
+                <root-appenders-ref>
+                    <![CDATA[
+						<appender-ref ref="SYS_INFO" />
+						<appender-ref ref="SYS_ERROR" />
+					]]>
+                </root-appenders-ref>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <resources>
+            <resource>
+                <!--resources下的所有配置文件 -->
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <!--根据profiles参数 导入测试或生产环境配置文件 -->
+                <directory>src/main/config/${profiles.activation}</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <useDefaultDelimiters>true</useDefaultDelimiters>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <finalName>hello-world-0.0.1-SNAPSHOT</finalName>
+    </build>
+
+</project>

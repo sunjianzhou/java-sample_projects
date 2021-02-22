@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
+    <groupId>com.jdicity</groupId>
+    <artifactId>APIGateway</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>gateway-common</module>
+        <module>gateway-web</module>
+        <module>gateway-core</module>
+        <module>checkstyle</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <spring-boot.version>2.2.10.RELEASE</spring-boot.version>
+        <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
+        <spring-cloud.version>Hoxton.SR6</spring-cloud.version>
+        <itCoverageAgent></itCoverageAgent>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--spring boot 相关依赖-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-spring-cloud-gateway-adapter</artifactId>
+                <version>1.8.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.tomakehurst</groupId>
+                <artifactId>wiremock</artifactId>
+                <version>2.27.1</version>
+                <scope>test</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <profiles>
+        <!--开发环境 -->
+        <profile>
+            <id>development</id>
+            <properties>
+                <profiles.activation>dev</profiles.activation>
+                <log.path>/export/Logs/</log.path>
+                <domain-name>api-gateway</domain-name>
+                <app-appenders-ref>
+                    <![CDATA[
+						<appender-ref ref="CONSOLE" />
+						<appender-ref ref="APP_INFO" />
+						<appender-ref ref="APP_ERROR" />
+					]]>
+                </app-appenders-ref>
+                <root-appenders-ref>
+                    <![CDATA[
+						<appender-ref ref="CONSOLE" />
+						<appender-ref ref="SYS_INFO" />
+						<appender-ref ref="SYS_ERROR" />
+					]]>
+                </root-appenders-ref>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- lambda环境 -->
+        <profile>
+            <id>lambda</id>
+            <properties>
+                <profiles.activation>lambda</profiles.activation>
+                <log.path>/export/Logs/</log.path>
+                <domain-name>api-gateway</domain-name>
+                <app-appenders-ref>
+                    <![CDATA[
+						<appender-ref ref="APP_INFO" />
+						<appender-ref ref="APP_ERROR" />
+					]]>
+                </app-appenders-ref>
+                <root-appenders-ref>
+                    <![CDATA[
+						<appender-ref ref="SYS_INFO" />
+						<appender-ref ref="SYS_ERROR" />
+					]]>
+                </root-appenders-ref>
+            </properties>
+        </profile>
+        <!--test环境 -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <profiles.activation>test</profiles.activation>
+                <log.path>/export/Logs/</log.path>
+                <domain-name>api-gateway</domain-name>
+                <app-appenders-ref>
+                    <![CDATA[
+						<appender-ref ref="APP_INFO" />
+						<appender-ref ref="APP_ERROR" />
+					]]>
+                </app-appenders-ref>
+                <root-appenders-ref>
+                    <![CDATA[
+						<appender-ref ref="SYS_INFO" />
+						<appender-ref ref="SYS_ERROR" />
+					]]>
+                </root-appenders-ref>
+            </properties>
+        </profile>
+        <!--正式环境 -->
+        <profile>
+            <id>production</id>
+            <properties>
+                <profiles.activation>prod</profiles.activation>
+                <log.path>/export/Logs/</log.path>
+                <domain-name>api-gateway</domain-name>
+                <app-appenders-ref>
+                    <![CDATA[
+						<appender-ref ref="APP_INFO" />
+						<appender-ref ref="APP_ERROR" />
+					]]>
+                </app-appenders-ref>
+                <root-appenders-ref>
+                    <![CDATA[
+						<appender-ref ref="SYS_INFO" />
+						<appender-ref ref="SYS_ERROR" />
+					]]>
+                </root-appenders-ref>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <configLocation>checkstyle/src/main/resources/checkstyle/checkstyle.xml</configLocation>
+                    <encoding>UTF-8</encoding>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>true</failsOnError>
+                    <linkXRef>false</linkXRef>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.4</version>
+                <configuration>
+                    <effort>Low</effort>
+                    <threshold>Medium</threshold>
+                    <failOnError>true</failOnError>
+                    <includeTests>true</includeTests>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>run-findbugs</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.14.0</version>
+                <configuration>
+                    <sourceEncoding>utf-8</sourceEncoding>
+                    <minimumTokens>100</minimumTokens>
+                    <targetJdk>1.8</targetJdk>
+                    <printFailingErrors>true</printFailingErrors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>pwd</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Tests.java</include>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <!-- optional: works also when skipped -->
+                    <forkCount>1</forkCount>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.18.1</version>
+                <executions>
+                    <execution>
+                        <id>integration-tests</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>**/*Test.java</include>
+                                <include>**/*Tests.java</include>
+                            </includes>
+                            <reuseForks>true</reuseForks>
+                            <argLine>${itCoverageAgent}</argLine>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- JACOCO - code coverage -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.9</version>
+                <executions>
+                    <!-- METHOD 1 -->
+                    <!--<execution>-->
+                    <!--<id>prepare-agent</id>-->
+                    <!--<goals>-->
+                    <!--<goal>prepare-agent</goal>-->
+                    <!--</goals>-->
+                    <!--</execution>-->
+                    <!-- prepare agent for measuring unit tests -->
+
+                    <!-- METHOD 2 -->
+                    <execution>
+                        <id>prepare-unit-tests</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <!--<configuration>-->
+                        <!--<destFile>${sonar.jacoco.reportPath}</destFile>-->
+                        <!--</configuration>-->
+                    </execution>
+
+                    <!-- prepare agent for measuring integration tests -->
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <!--<destFile>${sonar.jacoco.itReportPath}</destFile>-->
+                            <propertyName>itCoverageAgent</propertyName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

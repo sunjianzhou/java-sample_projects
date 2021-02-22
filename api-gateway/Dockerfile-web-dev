@@ -1,0 +1,19 @@
+FROM dockerhub-intra.smart-urban.cn:8443/base/jdk1.8.0_211:latest
+RUN rm -rfv /etc/localtime && \
+    cp -fv /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    mkdir -p /export/Logs/ && \
+	mkdir -p /export/logs/ && \
+    mkdir -p /export/icity/api-gateway-web && \
+    chown -R backend:backend /export/Logs && \
+	chown -R backend:backend /export/logs
+ENV LANG=en_US.UTF-8 JAVA_HOME=\/export\/server\/jdk-1.8.0_211 
+ENV JAVA_OPTS="-server -Xmx1024m -Xms512m"
+ENV JRE_HOME=$JAVA_HOME\/jre CLASS_PATH=$JAVA_HOME\/lib:$JRE_HOME\/lib
+ENV PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+WORKDIR /export/icity/api-gateway-web
+
+COPY gateway-web/target/gateway-web-0.0.1-SNAPSHOT.jar /export/icity/api-gateway-web/gateway-web-0.0.1-SNAPSHOT.jar
+RUN chown -R backend:backend /export/icity/api-gateway-web
+
+USER backend
+ENTRYPOINT ["sh","-c","java $JAVA_OPTS  -jar gateway-web-0.0.1-SNAPSHOT.jar"]

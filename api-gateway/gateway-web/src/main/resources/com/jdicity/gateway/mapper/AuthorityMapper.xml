@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jdicity.gateway.mapper.AuthorityMapper">
+    <resultMap id="authority" type="com.jdicity.gateway.dto.Authority">
+        <id column="aid" property="appId"></id>
+        <result column="name" property="appName"></result>
+        <result column="app_key" property="appKey"></result>
+        <result column="pub_key" property="pubKey"></result>
+        <result column="aes_privateKey" property="aesPrivateKey"></result>
+        <result column="encrypt_public_key" property="encryptPublicKey"></result>
+        <result column="encrypt_private_key" property="encryptPrivateKey"></result>
+        <result column="sign_public_key" property="signPublicKey"></result>
+        <result column="sign_private_key" property="signPrivateKey"></result>
+        <association property="appReference" javaType="com.jdicity.gateway.dto.AppReference">
+            <id property="id" column="id"></id>
+            <result column="client_id" property="clientId"></result>
+            <result column="app_code" property="appCode"></result>
+            <result column="client_type" property="clientType"></result>
+            <result column="encrypt_public_key" property="encryptPublicKey"></result>
+            <result column="encrypt_private_key" property="encryptPrivateKey"></result>
+            <result column="sign_public_key" property="signPublicKey"></result>
+            <result column="sign_private_key" property="signPrivateKey"></result>
+            <result column="secret" property="secret"></result>
+            <result column="access_token_check" property="accessTokenCheck"></result>
+            <result column="request_encrypt" property="requestEncrypt"></result>
+            <result column="response_encrypt" property="responseEncrypt"></result>
+            <result column="request_sign" property="requestSign"></result>
+            <result column="request_sign_type" property="requestSignType"></result>
+            <result column="response_sign" property="responseSign"></result>
+            <result column="param_complete_check" property="paramCompleteCheck"></result>
+            <result column="param_ts_check" property="paramTsCheck"></result>
+            <result column="param_nonce_check" property="paramNonceCheck"></result>
+            <result column="status" property="status"></result>
+            <result column="creator" property="creator"></result>
+        </association>
+        <collection property="apiName" ofType="string">
+            <result property="string" column="api_name"></result>
+        </collection>
+    </resultMap>
+
+    <select id="findAuthorityByAppId" resultMap="authority" parameterType="long">
+        select a.id as aid,a.name,a.app_key,a.pub_key,a.aes_privateKey,a.encrypt_public_key,a.encrypt_private_key,
+        a.sign_public_key,a.sign_private_key,c.api_name,d.*
+        from application a left join api_app b on a.id=b.app_id
+        left join api_info c on b.api_id=c.id
+        left join cfg_app_client d on a.client_id=d.client_id where a.id=#{id}
+    </select>
+</mapper>

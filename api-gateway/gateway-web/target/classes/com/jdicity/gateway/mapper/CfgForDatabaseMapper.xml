@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jdicity.gateway.mapper.CfgForDatabaseMapper">
+    <resultMap id="cfg" type="CfgForDatabase">
+        <result property="gatewayId" column="gateway_id"></result>
+        <result property="uri" column="uri"></result>
+        <result property="predicate" column="predicate"></result>
+        <result property="regularPath" column="regular_path"></result>
+        <result property="actualPath" column="actual_path"></result>
+        <result property="partsKey" column="parts_key"></result>
+        <collection property="filters" ofType="string">
+            <result property="string" column="value"></result>
+        </collection>
+    </resultMap>
+    <select id="findCfgInfo" resultMap="cfg">
+        SELECT a.gateway_id,a.uri,a.predicate,a.regular_path,a.actual_path,a.parts_key,b.value
+        FROM cfg_nacos a LEFT JOIN cfg_filter b
+        ON a.gateway_id=b.gateway_id
+    </select>
+</mapper>

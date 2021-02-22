@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="6.18">
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\authority\AuthorityToNacos.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\conf\RestTemplateConfig.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\conf\SwaggerConfig.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\conf\WebMvcConfig.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\controller\ApiBackConfigController.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\controller\ApiBackParamController.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\controller\ApiFrontConfigController.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\controller\ApiFrontParamController.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\controller\ApiInfoController.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\controller\ApplicationController.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\controller\AuthorizeController.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\controller\ConstantParamController.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\controller\FilterController.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\controller\GroupController.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\controller\PublishOnNacosController.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\controller\SentinelController.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\controller\TestController.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\entity\ApiApp.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\entity\ApiBackConfig.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\entity\ApiBackParameter.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\entity\ApiForDatabase.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\entity\ApiFrontConfig.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\entity\ApiFrontParameter.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\entity\ApiInfo.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\entity\Application.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\entity\CfgForDatabase.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\entity\ConstantParameter.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\entity\Filter.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\entity\Sentinel.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\entity\SentinelForDatabase.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\entity\Service.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\entity\UserInfo.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\GatewayWebApplication.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\load\LoadOnNacos.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\mapper\ApiAppMapper.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\mapper\ApiBackConfigMapper.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\mapper\ApiBackParameterMapper.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\mapper\ApiForDatabaseMapper.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\mapper\ApiFrontConfigMapper.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\mapper\ApiFrontParameterMapper.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\mapper\ApiInfoMapper.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\mapper\ApplicationMapper.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\mapper\AuthorityMapper.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\mapper\CfgForDatabaseMapper.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\mapper\ConstantParameterMapper.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\mapper\FilterMapper.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\mapper\SentinelForDatabaseMapper.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\mapper\SentinelMapper.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\mapper\ServiceMapper.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\mapper\UserInfoMapper.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\nacos\ApiForNacos.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\nacos\DatabaseToNacos.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\nacos\MyFilter.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\nacos\MyPredicate.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\sentinel\DegradeRuleToNacos.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\sentinel\FlowRuleToNacos.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\sentinel\MyDegradeRule.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\sentinel\MyFlowRule.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\ApiBackConfigService.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\ApiBackParamService.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\ApiFrontConfigService.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\ApiFrontParamService.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\ApiInfoService.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\ApplicationService.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\AuthorizeService.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\ConstantParamService.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\FilterService.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\GroupService.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\impl\ApiBackParamServiceImpl.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\impl\ApiBankConfigServiceImpl.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\impl\ApiFrontConfigServiceImpl.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\impl\ApiFrontParamServiceImpl.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\impl\ApiInfoServiceImpl.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\impl\ApplicationServiceImpl.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\impl\AuthorizeServiceImpl.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\impl\ConstantParamServiceImpl.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\impl\FilterServiceImpl.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\impl\GroupServiceImpl.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\impl\PublishOnNacosServiceImpl.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\impl\SentinelServiceImpl.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\PublishOnNacosService.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-web\src\main\java\com\jdicity\gateway\service\SentinelService.java">
+</file>
+</checkstyle>

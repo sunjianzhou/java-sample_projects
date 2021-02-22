@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--通过带参构造的方式将属性注入-->
+    <bean id="videoWithConstruct" class="net.xdclass.sp.domain.Video">
+        <constructor-arg name="title" value="带参构造"/>
+    </bean>
+
+    <!--通过set的方式将属性值注入-->
+    <bean id="video" class="net.xdclass.sp.domain.Video">
+        <property name="id" value="9"/>
+        <property name="title" value="Spring 5.x"/>
+    </bean>
+
+    <!--这里id可以不写，默认即报名的最后一个-->
+    <!--通过pojo类型注入，主要指的是ref这一项-->
+    <bean id="videoOrder" class="net.xdclass.sp.domain.VideoOrder" scope="prototype">
+        <property name="id" value="8"/>
+        <property name="outTradeNo" value="thisIsATradeNo"/>
+        <property name="video" ref="video"/>  <!--这里表示引用了video对象-->
+    </bean>
+
+    <bean id="videoMapAndList" class="net.xdclass.sp.domain.Video">
+        <property name="chapters">
+            <list>
+                <value>List中第一个值</value>
+                <value>List中第二个值</value>
+                <value>List中第三个值</value>
+            </list>
+        </property>
+        <property name="videoMap">
+            <map>
+                <entry key="1" value="ValueOne"></entry>
+                <entry key="2" value="ValueTwo"></entry>
+                <entry key="3" value="ValueThree"></entry>
+            </map>
+        </property>
+
+    </bean>
+
+</beans>

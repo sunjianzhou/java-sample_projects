@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+    <settings>
+        <!--下划线自动转驼峰映射，从而能让驼峰的变量自动映射到数据库中的带下划线的字段上去。-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--mapper文件二级缓存全局总开关，如果这边关闭，那么mapper中即便开启了也无效。-->
+        <setting name="cacheEnabled" value="true"/>
+        <!--延迟加载总开关-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--将aggressiveLazyLoading设置为false表示按需加载，默认为true-->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+
+    <typeAliases>
+<!--        <typeAlias type="com.example.demoproject.domain.Video" alias="Video"/>-->
+        <package name="com.example.demoproject.domain"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+<!--            <transactionManager type="MANAGED"/>-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://127.0.0.1:3306/xiaodi?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=UTC"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mapper/VideoMapper.xml"/>  <!--这里有几个表，就需要有几个Mapper.xml文件-->
+        <mapper resource="mapper/VideoOrderMapper.xml"/>
+    </mappers>
+</configuration>

@@ -1,0 +1,57 @@
+# 启动服务端口
+server:
+  port: 11005
+
+spring:
+  redis:
+    #    cluster:
+    #      max-redirects: 3
+    #      nodes: 10.241.242.8:7001,10.241.242.8:7003,10.241.242.8:7005
+    #      password: h~eMxl8m@cm9Cbd
+    host: 127.0.0.1
+    port: 6379
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/ucuc_java?useSSL=false&characterEncoding=utf8&useTimezone=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  #    initialSize: 1
+  #    minIdle: 5
+  #    maxActive: 20
+  #    maxWait: 60000
+  #    timeBetweenEvictionRunsMillis: 60000
+  #    minEvictableIdleTimeMillis: 300000
+  #    testWhileIdle: true
+  #    testOnBorrow: false
+  #    testOnReturn: false
+  #    validationQuery: select 1
+  #    default-transaction-isolation: 2
+  mvc:
+    servlet:
+      load-on-startup: 1
+  jackson:
+    time-zone: Asia/Shanghai
+
+# 天权接入配置
+dright:
+  baseUrl: http://cityos-dev.jdcityos.com
+  clientCredentials: client_credentials
+  clientId: 5f97c6e1e4b08cf54ddfe6b3
+  clientSecret: piZbqaeV7vUVbYqr63bOMmtk88lqVsxZ0GK9KI067h8VxlK5euUKh5JTnLSb5qoRwC0lnIASDwQDHdX4h558i5bbFVW4F8hZJiz1sPysLNwMwUOPlz1iixHM8VWoU2kHdWp8qqiOb5oHQObAwtP7HpfSPzQQFBztvR7IuvNaNHbbJwTvOvSinS4RZ13Hsg46heFPcI0qIfdyY74PBdFz3yiWRWAeqo2CUCYrHwqwTzdqtLUqpBtOFZshADwK3FDSD3k0kckW2VakxSjZHMjpQdWvIZpz4GgwwQZbyc
+  clientUrl: /api/cityos/oauth/web/v1/oauth/token
+  tokenVerify: /api/cityos/oauth/web/v1/oauth/sso/verify
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.jdicity.lyd.dao
+  type-aliases-super-type: java.lang.Object
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+knife4j:
+  production: false #swagger开启关闭，true关闭
+  basic:
+    enable: true #是否认证
+    username: liyingda #认证用户名
+    password: 123456 #认证密码

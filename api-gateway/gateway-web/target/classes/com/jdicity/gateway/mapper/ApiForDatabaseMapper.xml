@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jdicity.gateway.mapper.ApiForDatabaseMapper">
+    <resultMap id="databaseToApi" type="ApiForDatabase">
+        <id property="id" column="id"></id>
+        <result property="apiName" column="api_name"></result>
+        <result property="frontPath" column="front_path"></result>
+        <result property="backAddr" column="back_addr"></result>
+        <result property="backPath" column="back_path"></result>
+        <collection property="filterName" ofType="string">
+            <result property="string" column="filter_name"></result>
+        </collection>
+    </resultMap>
+    <select id="findById" resultMap="databaseToApi" parameterType="long">
+        SELECT a.id,a.api_name,b.front_path,c.back_addr,c.back_path,d.filter_name
+        FROM api_info a
+        LEFT JOIN api_front_config b ON a.id=b.api_id
+        LEFT JOIN api_back_config c ON a.id=c.api_id
+        LEFT JOIN filter d ON a.id=d.api_id WHERE a.id=#{id}
+    </select>
+</mapper>

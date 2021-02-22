@@ -1,0 +1,439 @@
+server:
+  port: 8027
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+      - id: jzt-templete
+        uri: lb://jzt-templete
+        predicates:
+        - Path=/test/**
+        filters:
+        - name: RequestBodyCheck
+        - name: ResponseBodyCheck
+        - name: HeaderCheck
+        - name: TokenCheck
+        # - name: Hystrix
+        #   args:
+        #     name: systemfallback
+        #     fallbackUri: forward:/fallback/jzt-templete
+        - RewritePath=/test/(?<segment>.*), /$\{segment}
+      - id: jzt-api
+#        uri: lb://jzt-api
+        uri: http://127.0.0.1:8001
+        predicates:
+        - Path=/api/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+       # - name: TokenCheck
+       # - name: Hystrix
+          args:
+            name: systemfallback
+            fallbackUri: forward:/fallback/jzt-api
+        - RewritePath=/api/(?<segment>.*), /$\{segment}
+      - id: zhanyi-enterprise-img
+        uri: lb://zhanyi-enterprise2
+        predicates:
+        - Path=/enterprise/supply/common/img
+        filters:
+        - RewritePath=/enterprise/(?<segment>.*), /$\{segment}
+      - id: zhanyi-enterprise
+        uri: lb://zhanyi-enterprise2
+        predicates:
+        - Path=/enterprise/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - name: TokenCheck
+        - name: Hystrix
+          args:
+            name: systemfallback
+            fallbackUri: forward:/fallback/zhanyi-enterprise
+        - RewritePath=/enterprise/(?<segment>.*), /$\{segment}
+      - id: jzt-user
+        uri: lb://jzt-user
+        predicates:
+        - Path=/user/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - name: TokenCheck
+        - name: Hystrix
+          args:
+            name: systemfallback
+            fallbackUri: forward:/fallback/jzt-user
+        - RewritePath=/user/(?<segment>.*), /$\{segment}
+      - id: jzt-oauth
+        uri: lb://jzt-oauth
+        predicates:
+        - Path=/oauth/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - name: TokenCheck
+        - name: Hystrix
+          args:
+            name: systemfallback
+            fallbackUri: forward:/fallback/jzt-oauth
+        - RewritePath=/oauth/oauth/(?<segment>.*), /$\{segment}
+      - id: joycity
+        uri: lb://joycity
+        predicates:
+        - Path=/joycity/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        #- name: TokenCheck
+        # - name: Hystrix
+        #   args:
+        #     name: systemfallback
+        #     fallbackUri: forward:/fallback/joycity
+        - RewritePath=/joycity/joycity/(?<segment>.*), /$\{segment}
+      - id: joycity-upload
+        uri: lb://joycity
+        predicates:
+        - Path=/joycityupload/**
+        filters:
+        - name: Hystrix
+          args:
+            name: systemfallback
+            fallbackUri: forward:/fallback/joycity
+        - RewritePath=/joycityupload/(?<segment>.*), /$\{segment}
+      - id: joycity-coupon
+        uri: lb://joycity-coupon
+        predicates:
+        - Path=/joycity-coupon/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - name: TokenCheck
+        - name: Hystrix
+          args:
+            name: systemfallback
+            fallbackUri: forward:/fallback/joycity-coupon
+        - RewritePath=/joycity-coupon/joycity-coupon/(?<segment>.*), /$\{segment}
+      - id: jzt-external-gateway
+        uri: lb://jzt-external-gateway
+        predicates:
+        - Path=/external/**
+        filters:
+        - name: Hystrix
+          args:
+            name: systemfallback
+            fallbackUri: forward:/fallback/external
+        - RewritePath=/external/(?<segment>.*), /$\{segment}
+      - id: jzt-app-upload
+        uri: lb://jzt-app
+        predicates:
+        - Path=/app/jztmanage/oss/uploadFile
+        filters:
+        - RewritePath=/app/(?<segment>.*), /$\{segment}
+      - id: jzt-app
+        uri: lb://jzt-app
+        predicates:
+        - Path=/app/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/app/(?<segment>.*), /$\{segment}
+      - id: wangfujing-upload
+        uri: lb://wangfujing-weapp-server
+        predicates:
+        - Path=/wangfujing/shop/activity/uploadTicketImg
+        filters:
+        - StripPrefix=1
+      - id: wangfujing-upload2
+        uri: lb://wangfujing-weapp-server
+        predicates:
+        - Path=/wangfujing/api/feedback/upload
+        filters:
+        - StripPrefix=1
+      - id: wangfujing
+        uri: lb://wangfujing-weapp-server
+        predicates:
+        - Path=/wangfujing/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/wangfujing/(?<segment>.*), /$\{segment}
+      - id: wangfujingadmin-upload
+        uri: lb://wangfujing-admin-server
+        predicates:
+        - Path=/wangfujingadmin/oss/uploadFile
+        filters:
+        - RewritePath=/wangfujingadmin/wangfujingadmin/(?<segment>.*), /$\{segment}
+      - id: wangfujingadmin
+        uri: lb://wangfujing-admin-server
+        predicates:
+        - Path=/wangfujingadmin/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/wangfujingadmin/wangfujingadmin/(?<segment>.*), /$\{segment}
+      - id: etown-admin
+        uri: lb://etown-admin
+        predicates:
+        - Path=/etownadmin/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/etownadmin/(?<segment>.*), /$\{segment}
+      - id: uia
+        uri: lb://uia
+        predicates:
+        - Path=/uum/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/uum/uum/(?<segment>.*), /$\{segment}
+      - id: suqian-proxy
+        uri: lb://suqian-proxy
+        predicates:
+        - Path=/suqianproxy/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/suqianproxy/(?<segment>.*), /$\{segment}
+      - id: icity-gateway
+        uri: lb://icity-gateway
+        predicates:
+        - Path=/icitygateway/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/icitygateway/(?<segment>.*), /$\{segment}
+      - id: lkyx-server
+        uri: lb://lkyx-server
+        predicates:
+        - Path=/lkyx-server/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/lkyx-server/(?<segment>.*), /$\{segment}
+      - id: ylcredit-applet
+        uri: lb://ylcredit-applet
+        predicates:
+        - Path=/ylcredit-applet/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/ylcredit-applet/(?<segment>.*), /$\{segment}
+      - id: marketingcenter
+        uri: lb://wangfujing-admin-server
+        predicates:
+        - Path=/marketingcenter/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/marketingcenter/marketingcenter/(?<segment>.*), /$\{segment}
+      - id: jzt-temporary-server
+        uri: lb://jzt-temporary-server
+        predicates:
+        - Path=/jzt-temporary-server/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/jzt-temporary-server/(?<segment>.*), /$\{segment}
+      - id: icity-gateway
+        uri: lb://icity-gateway
+        predicates:
+        - Path=/icity-gateway/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/icity-gateway/(?<segment>.*), /$\{segment}
+      - id: etown-user
+        uri: lb://etown-user-server
+        predicates:
+        - Path=/etown-user/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/etown-user/(?<segment>.*), /$\{segment}
+      - id: syc-quarter-server
+        uri: lb://syc-quarter-server
+        predicates:
+        - Path=/quarter-server/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/quarter-server/(?<segment>.*), /$\{segment}
+      - id: etown-server-upload
+        uri: lb://etown-server
+        predicates:
+        - Path=/etown-server/api/oss/uploadFileByFastDfs
+        filters:
+        - RewritePath=/etown-server/(?<segment>.*), /$\{segment}
+      - id: etown-server
+        uri: lb://etown-server
+        predicates:
+        - Path=/etown-server/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/etown-server/(?<segment>.*), /$\{segment}
+      - id: etown-app-upload
+        uri: lb://etown-admin
+        predicates:
+        - Path=/etown-admin/jztmanage/oss/uploadFile
+        filters:
+        - RewritePath=/etown-admin/(?<segment>.*), /$\{segment}
+      - id: etown-admin
+        uri: lb://etown-admin
+        predicates:
+        - Path=/etown-admin/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/etown-admin/(?<segment>.*), /$\{segment}
+      - id: etown-app-admin-upload
+        uri: lb://etown-app-admin
+        predicates:
+        - Path=/etown-app-admin/jztmanage/oss/uploadFile
+        filters:
+        - StripPrefix=1
+      - id: etown-app-admin
+        uri: lb://etown-app-admin
+        predicates:
+        - Path=/etown-app-admin/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/etown-app-admin/(?<segment>.*), /$\{segment}
+      - id: etown-member
+        uri: lb://etown-member
+        predicates:
+        - Path=/etown-member/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/etown-member/(?<segment>.*), /$\{segment}
+      - id: create-goods-batch
+        uri: lb://etown-member-admin
+        predicates:
+        - Path=/etown-member-admin/member/batch/create
+        filters:
+        - RewritePath=/etown-member-admin/(?<segment>.*), /$\{segment}
+      - id: etown-member-admin
+        uri: lb://etown-member-admin
+        predicates:
+        - Path=/etown-member-admin/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/etown-member-admin/(?<segment>.*), /$\{segment}
+      - id: etown-weapp
+        uri: lb://yizhuang-weapp
+        predicates:
+        - Path=/etown-weapp/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/etown-weapp/(?<segment>.*), /$\{segment}
+      - id: payment-marketing-download
+        uri: lb://payment-marketing
+        predicates:
+        - Path=/payment-marketing/market/bill/download
+        filters:
+        - RewritePath=/payment-marketing/(?<segment>.*), /$\{segment}
+      - id: payment-marketing
+        uri: lb://payment-marketing
+        predicates:
+        - Path=/payment-marketing/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/payment-marketing/(?<segment>.*), /$\{segment}
+      - id: payment-marketing-server
+        uri: lb://payment-marketing-server
+        predicates:
+        - Path=/payment-marketing-server/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/payment-marketing-server/(?<segment>.*), /$\{segment}
+      - id: jzt-bkuser
+        uri: lb://jzt-bkuser
+        predicates:
+        - Path=/jzt-bkuser/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/jzt-bkuser/(?<segment>.*), /$\{segment}
+      - id: yizhuang-weapp
+        uri: lb://yizhuang-weapp
+        predicates:
+        - Path=/yizhuang-weapp/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/yizhuang-weapp/(?<segment>.*), /$\{segment}
+      - id: joycity-points-server
+        uri: lb://joycity-points-server
+        predicates:
+        - Path=/joycityPoints/**
+        filters:
+        - name: HeaderCheck
+        - name: RequestBodyCheck
+        - RewritePath=/joycityPoints/(?<segment>.*), /$\{segment}
+
+      loadbalancer:
+        use404: true
+        #default-filters:
+        # - StripPrefix=1
+
+# hystrix:
+#   command:
+#     default:
+#       execution:
+#         isolation:
+#           thread:
+#             timeoutInMilliseconds: 30000
+#     socialfallback:
+#       execution:
+#         isolation:
+#           thread:
+#             timeoutInMilliseconds: 60000
+
+ribbon:
+  eager-load:
+    enabled: true
+
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+
+
+gateway:
+  switch:
+    corsCheck: true
+  token:
+    tokenCheckUrlList:
+    - /user/updateUserPassword
+    - /user/completeUserInfo
+    - /api/user/getMyCollectList
+    - /user/guest/logout
+    - /api/content/handleArticleByArticleCode
+    - /user/user/completeUserInfo
+    - /api/user/completeUserInfo
+    - /user/user/getUserInfo
+    - /user/user/modifyMyPassword
+    - /joycity-coupon/activity/getUserActivityInfo
+    - /joycity-coupon/coupon/take
+    - /joycity-coupon/coupon/packageDetail
+    - /joycity-coupon/coupon/mine
+  forbidden:
+    forbiddenUrlList: /aa/**

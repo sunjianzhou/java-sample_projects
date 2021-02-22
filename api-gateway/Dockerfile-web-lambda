@@ -1,0 +1,5 @@
+FROM idockerhub.jd.com/uc-library/maven-jdsource:3.6.2-jdk-8
+COPY . /app
+WORKDIR /app
+RUN mvn clean package -Dmaven.test.skip=true -P lambda -q
+ENTRYPOINT ["java", "-jar", "/app/gateway-web/target/gateway-web-0.0.1-SNAPSHOT.jar"]

@@ -1,0 +1,73 @@
+uc-components-template-java--->SpringBoot模板项目
+┃
+┣━━━━check-style/--->静态代码检查文件
+┃
+┣━━━━src/--->项目核心目录文件
+┃    ┃
+┃    ┣━━━━main/ --->项目代码和资源
+┃    ┃   ┃
+┃    ┃   ┣━━━━config/ --->项目配置目录
+┃    ┃   ┃   ┃
+┃    ┃   ┃   ┣━━━━dev/ --->开发环境配置application.yml文件
+┃    ┃   ┃   ┃
+┃    ┃   ┃   ┣━━━━prod/ --->生产环境配置application.yml文件
+┃    ┃   ┃   ┃
+┃    ┃   ┃   ┗━━━test/ --->测试环境配置application.yml文件
+┃    ┃   ┃
+┃    ┃   ┣━━━━java/com/jdicity/ucuc/ --->项目代码
+┃    ┃   ┃   ┃
+┃    ┃   ┃   ┣━━━━HelloWorldTemplateApplication.java --->项目入口
+┃    ┃   ┃   ┃
+┃    ┃   ┃   ┣━━━━annotation/ --->自定义注解类目录
+┃    ┃   ┃   ┃
+┃    ┃   ┃   ┣━━━━aop/ --->AOP类目录
+┃    ┃   ┃   ┃
+┃    ┃   ┃   ┣━━━━config/ --->Configuration配置类目录
+┃    ┃   ┃   ┃
+┃    ┃   ┃   ┣━━━━constant/ --->常量、枚举类目录
+┃    ┃   ┃   ┃
+┃    ┃   ┃   ┣━━━━controller/ --->Controller接口配置类目录
+┃    ┃   ┃   ┃
+┃    ┃   ┃   ┣━━━━dao/ --->数据库操作接口类Mapper目录
+┃    ┃   ┃   ┃
+┃    ┃   ┃   ┣━━━━exc/ --->异常相关类目录
+┃    ┃   ┃   ┃
+┃    ┃   ┃   ┣━━━━interceptor/ --->拦截器目录
+┃    ┃   ┃   ┃
+┃    ┃   ┃   ┣━━━━model/ --->数据库字段映射类目录
+┃    ┃   ┃   ┃
+┃    ┃   ┃   ┣━━━━schemas/ --->请求和相应实体类目录
+┃    ┃   ┃   ┃   ┃
+┃    ┃   ┃   ┃   ┣━━━━common/ --->抽取公告参数类目录
+┃    ┃   ┃   ┃   ┃
+┃    ┃   ┃   ┃   ┣━━━━request/ --->请求参数对应类目录
+┃    ┃   ┃   ┃   ┃
+┃    ┃   ┃   ┃   ┗━━━response/ --->响应返回参数对应目录
+┃    ┃   ┃   ┃
+┃    ┃   ┃   ┣━━━━service/ --->业务逻辑服务类目录
+┃    ┃   ┃   ┃   ┃
+┃    ┃   ┃   ┃   ┣━━━━impl/ --->业务逻辑接口类实现类目录
+┃    ┃   ┃   ┃   ┃
+┃    ┃   ┃   ┃   ┗━━━interface *Service.java --->业务逻辑接口类
+┃    ┃   ┃   ┃
+┃    ┃   ┃   ┗━━━util/ --->工具类目录
+┃    ┃   ┃
+┃    ┃   ┗━━━resources/ --->项目资源文件
+┃    ┃      ┃
+┃    ┃      ┣━━━━mapper/ --->sql静态资源目录
+┃    ┃      ┃
+┃    ┃      ┗━━━logback-spring.xml --->日志配置文件
+┃    ┃
+┃    ┗━━━test/java/com/jdicity.ucuc/ -->测试相关类目录
+┃       ┃
+┃       ┣━━━━function/*ControllerTest.java --->Controller层测试目录
+┃       ┃
+┃       ┣━━━━service/impl/*ServiceImplTest.java --->Service层测试目录
+┃       ┃
+┃       ┗━━━Dao/*MapperTest.java --->日志配置文件
+┃
+┗━━━pom.xml -->项目说明、maven、打包配置信息文件
+
+
+
+

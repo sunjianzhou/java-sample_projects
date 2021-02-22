@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间需要保持唯一，最好和dao层的java接口一致，方便自动映射SQL语句。-->
+<!--Mybatis是使用的接口动态代理。-->
+<mapper namespace="com.example.demoproject.dao.VideoOrderMapper">
+
+    <cache eviction="LRU" flushInterval="100000" readOnly="true" size="1024"/>
+
+    <resultMap id="VideoOrderResultMap" type="VideoOrder">
+        <!--
+        id 指定查询的唯一标识
+        column 数据库字段的名称
+        property pojo类的名称
+        这里目前type只是指定的Video类型，所以result中没指出来的字段，其结果值都会变成null或者0。
+        -->
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="outTradeNo" property="outTradeNo" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="DATE" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="total_fee" property="totalFee" jdbcType="VARCHAR" />
+        <result column="video_id" property="videoId" jdbcType="VARCHAR" />
+        <result column="video_title" property="videoTitle" jdbcType="VARCHAR" />
+
+        <!--
+        association 配置属性一对一,即一个user_id对应一个id，关联过去一条对应的user记录。
+        property 对应videoOrder里面的user属性名
+        javaType 这个属性的类型
+        这里实际上是单表里又包含另一个表
+        -->
+        <association property="user" javaType="User">
+            <id property="id" column="user_id"/>
+            <result property="name" column="name"/>
+            <result property="headImg" column="head_img"/>
+            <result property="createTime" column="create_time"/>
+            <result property="phone" column="phone"/>
+
+        </association>
+
+    </resultMap>
+
+    <select id="queryVideoOrderList" resultMap="VideoOrderResultMap">
+        select
+        o.id AS id,
+        o.user_id AS user_id,
+        o.out_trade_no AS outTradeNo,
+
+        o.state AS state,
+        o.total_fee,
+        o.video_id AS video_id,
+        o.video_title AS video_title,
+        u.name AS name,
+        u.head_img AS head_img,
+        u.phone AS phone
+        from video_order o left join user u on o.user_id = u.id;
+    </select>
+
+
+    <resultMap id="UserOrderResultMap" type="User">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="pwd" column="pwd"/>
+        <result property="headImg" column="head_img"/>
+        <result property="createTime" column="create_time"/>
+        <result property="phone" column="phone"/>
+
+        <!--
+        property 填写pojo类中集合类属性的名称
+        ofType 集合里pojo对象
+        -->
+        <collection property="videoOrderList" ofType="VideoOrder">
+            <!--配置主键，关联Order的唯一标识-->
+            <id column="order_id" property="id" jdbcType="INTEGER" />
+            <result column="user_id" property="userId" jdbcType="VARCHAR" />
+            <result column="video_img" property="videoImg" jdbcType="VARCHAR" />
+            <result column="outTradeNo" property="outTradeNo" jdbcType="VARCHAR" />
+            <result column="create_time" property="createTime" jdbcType="DATE" />
+            <result column="state" property="state" jdbcType="VARCHAR" />
+            <result column="total_fee" property="totalFee" jdbcType="VARCHAR" />
+            <result column="video_id" property="videoId" jdbcType="VARCHAR" />
+            <result column="video_title" property="videoTitle" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+
+    <select id="queryUserOrder" resultMap="UserOrderResultMap">
+        select
+            u.id,
+            u.name,
+            u.head_img,
+            u.create_time,
+            u.phone,
+            u.pwd,
+            o.id AS order_id,
+            o.out_trade_no AS outTradeNo,
+            o.user_id,
+            o.create_time,
+            o.state,
+            o.total_fee,
+            o.video_id,
+            o.video_title,
+            o.video_img
+        from user u left join video_order o on u.id = o.user_id
+    </select>
+
+    <resultMap id="VideoOrderResultMapLazy" type="VideoOrder">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="outTradeNo" property="outTradeNo" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="DATE" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="total_fee" property="totalFee" jdbcType="VARCHAR" />
+        <result column="video_id" property="videoId" jdbcType="VARCHAR" />
+        <result column="video_title" property="videoTitle" jdbcType="VARCHAR" />
+
+        <!--
+        select：指定延迟加载需要执行的statement id。
+        column：和select查询关联的字段
+        -->
+        <association property="user" javaType="User" column="user_id" select="SelectUserByUserId"/>
+
+    </resultMap>
+
+    <!--关于user的查询做成懒加载的模式。-->
+    <select id="SelectUserByUserId" resultType="User">
+        select * from user where id=#{user_id};
+    </select>
+
+    <!--此时，虽然是使用的resultMap，但是查询语句中并不会涉及到User相关的表查询。-->
+    <select id="queryVideoOrderLazy" resultMap="VideoOrderResultMapLazy">
+        select
+            o.id AS id,
+            o.user_id AS user_id,
+            o.out_trade_no AS outTradeNo,
+            o.state AS state,
+            o.total_fee,
+            o.video_id AS video_id,
+            o.video_title AS video_title
+        from video_order o;
+    </select>
+
+
+</mapper>

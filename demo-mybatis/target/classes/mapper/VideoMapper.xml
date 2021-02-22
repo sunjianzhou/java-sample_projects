@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间需要保持唯一，最好和dao层的java接口一致，方便自动映射SQL语句。-->
+<!--Mybatis是使用的接口动态代理。-->
+<mapper namespace="com.example.demoproject.dao.VideoMapper">
+
+    <cache eviction="LRU" flushInterval="100000" readOnly="true" size="1024"/>
+
+    <sql id="base_video_field">
+        id,title,summary,cover_img
+    </sql>
+
+    <!--下面部分即为statement sql。-->
+    <!--注意：下面部分id需要唯一，且需要和mapper里对应接口对应，并且变量也需要在dao层通过@param进行封装起来。-->
+    <!--resultType对应的是返回的结果。这里需要对应到具体的domain中的实体类上。-->
+    <!--parameterType代表的是入参，主要是解决mysql的类型与java的类型不太一致的情况，比如varchar对上string。-->
+    <select id="selectById" parameterType="java.lang.Integer" resultType="Video">
+        select * from video where id = #{video_id, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectListByXml" resultType="Video">
+--         select * from video
+        select <include refid="base_video_field"/> from video
+    </select>
+
+    <select id = "selectByPointAndTitleLike" resultType="Video">
+        select * from video
+        where point = #{point, jdbcType=DOUBLE} and title like concat('%', #{title, jdbcType=VARCHAR}, '%')
+    </select>
+
+    <insert id="add" parameterType="Video" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO `xiaodi`.`video` (`title`, `summary`, `cover_img`, `price`, `point`, `create_time`)
+        VALUES
+        (#{title, jdbcType=VARCHAR}, #{summary, jdbcType=VARCHAR}, #{coverImg, jdbcType=VARCHAR}, #{price, jdbcType=INTEGER}, #{point, jdbcType=DOUBLE}, #{createTime, jdbcType=DATE});
+    </insert>
+
+    <insert id="addBatch" parameterType="com.example.demoproject.domain.Video" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO `xiaodi`.`video` (`title`, `summary`, `cover_img`, `price`, `point`, `create_time`)
+        VALUES
+        <foreach collection="list" item="video" separator=",">
+            (#{video.title, jdbcType=VARCHAR}, #{video.summary, jdbcType=VARCHAR}, #{video.coverImg, jdbcType=VARCHAR}, #{video.price, jdbcType=INTEGER},
+             #{video.point, jdbcType=DOUBLE}, #{video.createTime, jdbcType=DATE})
+        </foreach>
+    </insert>
+
+    <update id="updateVideo" parameterType="com.example.demoproject.domain.Video">
+        update video
+        set
+        title = #{title, jdbcType=VARCHAR},
+        summary = #{summary, jdbcType=VARCHAR},
+        cover_img = #{coverImg, jdbcType=VARCHAR},      <!--注意，这里等号前面的是数据库的字段，所以是下划线的。后面是JAVA对象的属性，所以是对应的驼峰的变量。-->
+        price = #{price, jdbcType=INTEGER},
+        point = #{point, jdbcType=DOUBLE},
+        create_time = #{createTime, jdbcType=DATE}
+        where
+        id = #{id}
+
+    </update>
+
+    <update id="updateVideoSelective" parameterType="com.example.demoproject.domain.Video">
+        update video
+        <!--这里有prefix，所以可以把set给去了。相当于挪上来了。-->
+        <!--这里的suffixOverrides是为了去掉最后多余的逗号，因为不确定哪个是最后一个，所以都加上-->
+        <trim prefix="set" suffixOverrides=",">
+            <if test="title != null"> title = #{title, jdbcType=VARCHAR},</if>
+            <if test="summary != null"> summary = #{summary, jdbcType=VARCHAR},</if>
+            <if test="coverImg != null"> cover_img = #{coverImg, jdbcType=VARCHAR},</if>
+            <if test="price != 0"> price = #{price, jdbcType=INTEGER},</if>
+            <if test="point != null"> point = #{point, jdbcType=DOUBLE},</if>   <!--这里point想用不等于null，那么point就需要用封装的对象进行封装一下。-->
+            <if test="createTime != null"> create_time = #{createTime, jdbcType=DATE}</if>
+        </trim>
+        where
+        id = #{id}
+    </update>
+
+    <delete id="deleteByCreateTimeAndPrice" parameterType="java.util.Map">
+    <!--这里主要是讲转义字符，因为尖括号在xml是封闭符，没法直接表示成大于或者小于，所以需要以下方式进行包装，表示转义。-->
+        delete from video where create_time <![CDATA[ >= ]]> #{createTime} and price <![CDATA[ < ]]> #{price};
+    </delete>
+
+    <resultMap id="VideoResultMap" type="Video">
+        <!--
+        id 指定查询的唯一标识
+        column 数据库字段的名称
+        property pojo类的名称
+        这里目前type只是指定的Video类型，所以result中没指出来的字段，其结果值都会变成null或者0。
+        -->
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="video_title" property="title" jdbcType="VARCHAR" />
+        <result column="summary" property="summary" jdbcType="VARCHAR" />
+        <result column="cover_img" property="coverImg" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="selectBaseFieldByIdWithResultMap" resultMap="VideoResultMap">
+        select id, title as video_title, summary, cover_img from video where id = #{videoId};
+    </select>
+
+
+</mapper>

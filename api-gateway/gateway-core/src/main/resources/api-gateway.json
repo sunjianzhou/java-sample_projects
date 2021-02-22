@@ -1,0 +1,16 @@
+[{
+  "filters": [{
+    "args": {
+      "parts": "1"
+    },
+    "name": "StripPrefix"
+  }],
+  "id": "web",
+  "predicates": [{
+    "args": {
+      "pattern": "/api-vq/**"
+    },
+    "name": "Path"
+  }],
+  "uri": "http://localhost:11009/"
+}]

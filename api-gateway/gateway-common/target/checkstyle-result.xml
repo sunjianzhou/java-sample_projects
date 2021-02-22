@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="6.18">
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\cache\CacheService.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\cache\impl\MemoryCacheServiceImpl.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\cache\impl\RedisCacheServiceImpl.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\config\RedisConfig.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\constant\AppClientConstant.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\constant\CacheKeys.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\constant\GatewayEncryptProperties.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\constant\GatewaySignProperties.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\constant\HeaderEnum.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\constant\NacosPropertiesConstant.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\constant\ResponseCodeEnum.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\constant\TokenProperties.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\dto\AppReference.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\dto\Authority.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\exceptions\CustomErrorException.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\util\AESUtils.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\util\JWTUtils.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\util\RequestUtils.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\java\com\jdicity\gateway\util\RSAUtils.java">
+</file>
+<file name="D:\workspace\Java\api-gateway\gateway-common\src\main\resources\application.properties">
+</file>
+</checkstyle>

@@ -1,0 +1,234 @@
+server:
+  port: 8027
+spring:
+  redis:
+    cluster:
+      max-redirects: 3
+      nodes: 10.240.226.11:5093,10.240.226.54:5050,10.240.226.6:5048
+      lettuce:
+        pool:
+          max-active: 200
+          max-idle: 64
+          min-idle: 32
+    password: RUICfihf7sJQ1HDn
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+        - id: jzt-api
+          uri: http://10.221.114.134:8025/jzt-api
+          predicates:
+            - Path=/api/**
+          filters:
+            - name: HeaderCheck
+            - name: RequestBodyCheck
+            - name: TokenCheck
+            - name: Hystrix
+              args:
+                name: systemfallback
+                fallbackUri: forward:/fallback/jzt-api
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
+        - id: zhanyi-enterprise-img
+          uri: http://10.241.171.216:8077/zhanyi-enterprise
+          predicates:
+          - Path=/enterprise/supply/common/img
+          filters:
+          - RewritePath=/enterprise/(?<segment>.*), /$\{segment}
+        - id: zhanyi-enterprise
+          uri: http://10.241.171.216:8077/zhanyi-enterprise
+          predicates:
+            - Path=/enterprise/**
+          filters:
+            - name: HeaderCheck
+            - name: RequestBodyCheck
+            - name: TokenCheck
+            - name: Hystrix
+              args:
+                name: systemfallback
+                fallbackUri: forward:/fallback/zhanyi-enterprise
+            - RewritePath=/enterprise/(?<segment>.*), /$\{segment}
+        - id: joycity
+          uri: http://10.240.161.149:8080/joycity
+          predicates:
+            - Path=/joycity/**
+          filters:
+            - name: HeaderCheck
+            - name: RequestBodyCheck
+            - RewritePath=/joycity/joycity/(?<segment>.*), /$\{segment}
+        - id: joycity-upload
+          uri: http://10.240.161.149:8080/joycity
+          predicates:
+            - Path=/joycityupload/**
+          filters:
+            - RewritePath=/joycityupload/(?<segment>.*), /$\{segment}
+        - id: joycity-coupon
+          uri: http://10.240.16.191:8080/joycity-coupon
+          predicates:
+            - Path=/joycity-coupon/**
+          filters:
+            - name: HeaderCheck
+            - name: RequestBodyCheck
+            - name: TokenCheck
+            - RewritePath=/joycity-coupon/joycity-coupon/(?<segment>.*), /$\{segment}
+        - id: wangfujing-upload
+          uri: http://10.240.5.84:8072/wangfujing-weapp-server
+          predicates:
+          - Path=/wangfujing/shop/activity/uploadTicketImg
+          filters:
+          - StripPrefix=1
+        - id: wangfujing-upload2
+          uri: http://10.240.5.84:8072/wangfujing-weapp-server
+          predicates:
+          - Path=/wangfujing/api/feedback/upload
+          filters:
+          - StripPrefix=1
+        - id: wangfujing
+          uri: http://10.240.5.84:8072/wangfujing-weapp-server
+          predicates:
+          - Path=/wangfujing/**
+          metadata:
+            response-timeout: 1000
+            connect-timeout: 200
+          filters:
+          - name: HeaderCheck
+          - name: RequestBodyCheck
+          - RewritePath=/wangfujing/(?<segment>.*), /$\{segment}
+        - id: jzt-app-upload
+          uri: http://172.25.117.154:8020/jzt-app
+          predicates:
+            - Path=/app/jztmanage/oss/uploadFile
+          filters:
+            - RewritePath=/app/(?<segment>.*), /$\{segment}
+        - id: jzt-app
+          uri: http://172.25.117.154:8020/jzt-app
+          predicates:
+            - Path=/app/**
+          filters:
+            - name: HeaderCheck
+            - name: RequestBodyCheck
+            - RewritePath=/app/(?<segment>.*), /$\{segment}
+        - id: zhanyi-enterprise-admin-upload
+          uri: http://172.25.77.235:8078/zhanyi-enterprise-admin
+          predicates:
+            - Path=/enterprise-admin/jztmanage/oss/uploadFile
+          filters:
+            - RewritePath=/enterprise-admin/(?<segment>.*), /$\{segment}
+        - id: zhanyi-enterprise-admin
+          uri: http://172.25.77.235:8078/zhanyi-enterprise-admin
+          predicates:
+            - Path=/enterprise-admin/**
+          filters:
+            - name: HeaderCheck
+            - name: RequestBodyCheck
+            - RewritePath=/enterprise-admin/(?<segment>.*), /$\{segment}
+        - id: uia
+          uri: http://10.221.174.122:6001/uia
+          predicates:
+          - Path=/uum/**
+          filters:
+          - name: HeaderCheck
+          - name: RequestBodyCheck
+          - RewritePath=/uum/uum/(?<segment>.*), /$\{segment}
+        - id: suqian-proxy
+          uri: http://172.25.107.26:6001/suqian-proxy
+          predicates:
+          - Path=/suqianproxy/**
+          filters:
+          - name: HeaderCheck
+          - name: RequestBodyCheck
+          - RewritePath=/suqianproxy/(?<segment>.*), /$\{segment}
+        - id: icity-gateway
+          uri: http://172.23.208.130:8080/icity-gateway
+          predicates:
+          - Path=/icitygateway/**
+          filters:
+          - name: HeaderCheck
+          - name: RequestBodyCheck
+          - RewritePath=/icitygateway/(?<segment>.*), /$\{segment}
+        - id: wangfujingadmin
+          uri: http://172.25.87.191:8067/wangfujing-admin-server
+          predicates:
+          - Path=/wangfujingadmin/**
+          filters:
+          - name: HeaderCheck
+          - name: RequestBodyCheck
+          - RewritePath=/wangfujingadmin/wangfujingadmin/(?<segment>.*), /$\{segment}
+        - id: jzt-temporary-server
+          uri: http://172.24.85.238:8011/jzt-temporary-server
+          predicates:
+          - Path=/jzt-temporary-server/**
+          filters:
+          - name: HeaderCheck
+          - name: RequestBodyCheck
+          - RewritePath=/jzt-temporary-server/(?<segment>.*), /$\{segment}
+        - id: icity-gateway-pre
+          uri: http://172.24.124.81:8080/icity-gateway-pre
+          predicates:
+          - Path=/icity-gateway-pre/**
+          filters:
+          - name: HeaderCheck
+          - name: RequestBodyCheck
+          - RewritePath=/icity-gateway-pre/(?<segment>.*), /$\{segment}
+      loadbalancer:
+        use404: true
+      #default-filters:
+       # - StripPrefix=1
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.jdcity.jzt.gateway.db.domain
+  type-aliases-super-type: java.lang.Object
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+# hystrix:
+#   command:
+#     default:
+#       execution:
+#         isolation:
+#           thread:
+#             timeoutInMilliseconds: 3000
+#     socialfallback:
+#       execution:
+#         isolation:
+#           thread:
+#             timeoutInMilliseconds: 60000
+
+ribbon:
+  eager-load:
+    enabled: true
+
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+
+gateway:
+  switch:
+    corsCheck: true
+  token:
+    tokenCheckUrlList:
+      - /user/updateUserPassword
+      - /user/completeUserInfo
+      - /api/user/getMyCollectList
+      - /user/guest/logout
+      - /api/content/handleArticleByArticleCode
+      - /user/user/completeUserInfo
+      - /api/user/completeUserInfo
+      - /user/user/getUserInfo
+      - /user/user/modifyMyPassword
+      - /joycity-coupon/activity/getUserActivityInfo
+      - /joycity-coupon/coupon/take
+      - /joycity-coupon/coupon/packageDetail
+      - /joycity-coupon/coupon/mine
+  forbidden:
+    forbiddenUrlList: abc

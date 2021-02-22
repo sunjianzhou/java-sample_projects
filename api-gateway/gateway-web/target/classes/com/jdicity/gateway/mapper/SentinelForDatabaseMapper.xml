@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jdicity.gateway.mapper.SentinelForDatabaseMapper">
+    <select id="findRuleByApiId" parameterType="long" resultType="SentinelForDatabase">
+        SELECT a.flow_grade,a.flow_count,a.flow_startegy,a.flow_behavior,a.flow_cluster,
+        a.degrade_grade,a.degrade_count,a.degrade_time,b.front_path
+        FROM sentinel a LEFT JOIN api_front_config b ON a.api_id=b.api_id
+        WHERE b.api_id=#{id}
+    </select>
+</mapper>
